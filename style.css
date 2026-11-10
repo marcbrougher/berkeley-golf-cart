@@ -45,6 +45,7 @@ body {
   border: 1px solid rgba(253, 181, 21, .55);
   background: rgba(253, 181, 21, .12);
   padding: 4px 10px; border-radius: 999px;
+  white-space: nowrap;
 }
 
 /* ---------- Layout ---------- */
