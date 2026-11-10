@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GolfBear · Golf Cart Rides Around Cal</title>
+  <meta name="description" content="Prototype: request a golf cart pickup anywhere within 2.5 miles of UC Berkeley's Sather Tower.">
+  <meta name="theme-color" content="#003262">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐻</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">🐻</span><span>Golf<span class="gold">Bear</span></span></div>
+    <span class="badge">Prototype demo</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel" aria-label="Request a ride">
+      <div id="requestView" class="view">
+        <div class="intro">
+          <h1>Need a lift around campus?</h1>
+          <p class="lede">GolfBear sends a golf cart to pick you up anywhere within <strong>2.5&nbsp;miles of Sather Tower</strong>.</p>
+          <div class="chips">
+            <span class="chip"><span class="dot"></span><span id="cartCount">6</span> carts nearby</span>
+            <span class="chip">Avg. pickup ~5 min</span>
+          </div>
+        </div>
+
+        <button id="locateBtn" class="btn btn-outline" type="button">📍 Use my current location</button>
+
+        <div class="divider"><span>or enter an address</span></div>
+
+        <form id="addressForm" autocomplete="off" novalidate>
+          <label for="address" class="label">Pickup address</label>
+          <div class="input-row">
+            <input id="address" type="text" placeholder="e.g. 2220 Piedmont Ave, Berkeley" enterkeyhint="search">
+            <button id="findBtn" class="btn btn-find" type="submit">Find</button>
+          </div>
+          <div class="form-foot">
+            <button type="button" id="sampleBtn" class="link-btn">Try a sample address</button>
+            <span class="tip">or tap the map</span>
+          </div>
+        </form>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+
+        <fieldset class="riders">
+          <legend class="label">How many riders?</legend>
+          <div class="seg">
+            <input type="radio" name="riders" id="r1" value="1" checked><label for="r1">1</label>
+            <input type="radio" name="riders" id="r2" value="2"><label for="r2">2</label>
+            <input type="radio" name="riders" id="r3" value="3"><label for="r3">3</label>
+            <input type="radio" name="riders" id="r4" value="4"><label for="r4">4</label>
+            <input type="radio" name="riders" id="r5" value="5"><label for="r5">5</label>
+          </div>
+        </fieldset>
+
+        <div class="send-wrap">
+          <button id="sendBtn" class="btn btn-primary" type="button" disabled>Send a GolfBear</button>
+          <p class="hint" id="sendHint">Set a pickup spot to request a cart.</p>
+        </div>
+      </div>
+
+      <div id="trip" class="trip" hidden>
+        <div class="trip-head">
+          <span class="trip-status" id="tripStatus">On the way</span>
+          <span class="eta" id="tripEtaWrap"><b id="tripEta">5</b> min</span>
+        </div>
+        <div class="progress" aria-hidden="true"><div id="tripBar"></div></div>
+        <dl class="trip-meta">
+          <div><dt>Driver</dt><dd id="tripDriver"></dd></div>
+          <div><dt>Cart</dt><dd id="tripCart"></dd></div>
+          <div><dt>Riders</dt><dd id="tripRiders"></dd></div>
+          <div><dt>Cart size</dt><dd id="tripSize"></dd></div>
+          <div class="wide"><dt>Pickup</dt><dd id="tripPickup"></dd></div>
+        </dl>
+        <button id="tripBtn" class="btn btn-ghost" type="button">Cancel ride</button>
+      </div>
+
+      <p class="fineprint">🎓 Class project prototype. No real golf carts are dispatched.</p>
+    </section>
+
+    <div id="map" class="map" role="application" aria-label="Map of the GolfBear service area around UC Berkeley"></div>
+  </main>
+
+  <div id="toast" class="toast" role="alert" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
